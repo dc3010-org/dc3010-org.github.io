@@ -1,16 +1,20 @@
-.App {
-  text-align: center;
-}
 .app-baseline-layout {
-  background-color: #84dad6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  font-family: Trebuchet MS;
-  color:#00BFFF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color:#2f0c70;
+}
+
+.background-image{
+  background-image:
+    linear-gradient(45deg, #84dad6,#22222200 ),
+    url('../images/Laptop.jpg');
+  background-position: center;
+  background-size: cover;
 }
 
 .header-spacing {
@@ -18,7 +22,7 @@
 }
 .home-title-text {
   font-size: 15vh;
-  color: 	#4169E1;
+  color: 	#1c41af;
 }
 .font-awesome-icon {
   text-align: center;
@@ -26,6 +30,14 @@
 }
 
 .body-layout{
-  background-color: #84dad6;
+  background-color: rgba(1,1,1,0);
   font-size: 5vh;
+}
+
+.footer {
+  text-align: right;
+  align-items: end;
+  justify-content: right;
+  font-size: 2vh;
+  color: rgb(65, 65, 65);
 }
