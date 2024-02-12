@@ -27,9 +27,3 @@ test('Home Screen renders Login and Signup with email buttons', () => {
   expect(signupButton).toHaveClass('btn btn-outline-primary btn-lg');
 
 });
-
-test('Home Screen renders footer message', () => {
-  render(<Home />);
-  const fontAwesomeIconElement = screen.getByText(/DC3010 Final Project Application/i);
-  expect(fontAwesomeIconElement).toBeInTheDocument();
-});

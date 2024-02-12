@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
+import Footer from './components/Footer';
 
 function Home() {
   return (
@@ -21,11 +22,7 @@ function Home() {
       </div>
       </body>
     </div>
-          <footer className="footer">
-          <p>
-            DC3010 Final Project Application
-          </p>
-        </footer>
+      <Footer />
     </div>
   );
 }
