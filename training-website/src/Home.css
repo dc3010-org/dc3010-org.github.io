@@ -1,14 +1,3 @@
-.app-baseline-layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color:#2f0c70;
-}
-
 .background-image{
   background-image:
     linear-gradient(45deg, #84dad6,#22222200 ),
@@ -32,12 +21,4 @@
 .body-layout{
   background-color: rgba(1,1,1,0);
   font-size: 5vh;
-}
-
-.footer {
-  text-align: right;
-  align-items: end;
-  justify-content: right;
-  font-size: 2vh;
-  color: rgb(65, 65, 65);
 }

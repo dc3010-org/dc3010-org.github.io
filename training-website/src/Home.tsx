@@ -1,8 +1,9 @@
-import React from 'react';
 import './Home.css';
+import './BasicStyles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
 import Footer from './components/Footer';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -18,7 +19,9 @@ function Home() {
       <body className="body-layout">
       <div className="d-grid gap-2">
         <button type="button" className="btn btn-outline-primary btn-lg" aria-label='login-button'>Log in</button>
-        <button type="button" className="btn btn-outline-primary btn-lg" aria-label='signup-button'>Signup with email</button>
+        <Link to="/signup">
+          <button type="button" className="btn btn-outline-primary btn-lg" aria-label='signup-button'>Signup with email</button>
+        </Link>
       </div>
       </body>
     </div>
