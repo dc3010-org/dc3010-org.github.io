@@ -1,11 +1,11 @@
 import './BasicStyles.css';
-import './Signup.css';
+import './Login.css';
 import Footer from './components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-function Signup() {
+function Login() {
     return (
         <div>
             <div className="app-baseline-layout">
@@ -13,27 +13,20 @@ function Signup() {
                     <div className="font-awesome-icon">
                         <FontAwesomeIcon icon={faFilePen} aria-label='font-awesome' />
                     </div>
-                    <h1>Please fill out your details to create an account</h1>
+                    <h1>Login Below!</h1>
                 </header>
                 <body>
                     <form action="">
-                        <h2>Email Address:</h2>
-                        <h4 className="subtitle">The email address you want associating with the account</h4>
-                        <div className="input-group mb-3">
-                            <input type="email" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email'></input>
-                        </div>
-                        <h2>Username for site:</h2>
-                        <h4 className="subtitle">The username that will be used to login to your account</h4>
+                        <h2>Username</h2>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" placeholder='e.g. User123' aria-label='username'></input>
                         </div>
-                        <h2>Password:</h2>
-                        <h4 className="subtitle">The password for your account</h4>
+                        <h2>Password</h2>
                         <div className="input-group mb-3">
                             <input type="password" className="form-control" aria-label='password'></input>
                         </div>
                         <div className="input-group mb-3">
-                            <Link to="/login">
+                            <Link to="/dashboard">
                                 <input type="submit" value="Submit"></input>
                             </Link>
                         </div>
@@ -46,4 +39,4 @@ function Signup() {
     )
 }
 
-export default Signup;
+export default Login;

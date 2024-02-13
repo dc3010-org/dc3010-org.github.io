@@ -1,0 +1,13 @@
+.font-awesome-icon {
+    text-align: center;
+    font-size: 8vh;
+}
+
+.body-layout {
+    background-color: rgba(1, 1, 1, 0);
+    font-size: 5vh;
+}
+
+.header-spacing {
+    padding: 5%;
+}
