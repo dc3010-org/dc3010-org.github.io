@@ -4,6 +4,7 @@ import Home from './Home';
 import Signup from './Signup';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import { UserAuthContextProvider } from './UserAuthContext';
 
 const Main = () => {
     const [token, setToken] = useState();
@@ -20,9 +21,10 @@ const Main = () => {
 
 function App() {
     return (
-        <div>
+        <UserAuthContextProvider>
             <Main />
-        </div>
+        </UserAuthContextProvider>
+
     )
 }
 
