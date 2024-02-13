@@ -1,0 +1,4 @@
+/* necesary to make content appear below navigation bar */
+.navbar-style {
+    position: initial;
+}
