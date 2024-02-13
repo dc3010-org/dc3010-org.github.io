@@ -31,6 +31,7 @@ function logOut() {
     return signOut(auth);
 }
 
+// Monitor status of user on the application
 useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
         console.log("Auth", currentuser);
