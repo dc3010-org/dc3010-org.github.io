@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../UserAuthContext";
+import './Navbar.css';
 
 function NavBar() {
     let logOut: any = {};
@@ -33,7 +34,7 @@ function NavBar() {
                 </button>
 
             </div>
-
+            <button className="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Toggle offcanvas</button>
         </nav>
     );
 }

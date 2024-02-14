@@ -8,7 +8,6 @@ import { UserAuthContextProvider } from './UserAuthContext';
 import ProtectedRoute from './ProtectedRoute';
 
 const Main = () => {
-    const [token, setToken] = useState();
 
     return (
         <Routes>

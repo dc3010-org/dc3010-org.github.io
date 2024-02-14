@@ -5,4 +5,5 @@
 
 .user-data-text {
     color: white;
+    z-index: 10;
 }
