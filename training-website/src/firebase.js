@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,27 +18,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-// Define login, signup and logout functions for app session
-function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
-}
-function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
-}
-function logOut() {
-    return signOut(auth);
-}
-
-// Monitor status of user on the application
-useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-        console.log("Auth", currentuser);
-        setUser(currentuser);
-    });
-
-    return () => {
-        unsubscribe();
-    };
-}, []);
+export const auth = getAuth(app);
+export default app;

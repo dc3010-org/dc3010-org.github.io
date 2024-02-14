@@ -10,7 +10,7 @@ function Dashboard() {
                     <header className="d-flex justify-content-around flex-wrap">
                         <h1>Training courses you are currently enrolled on:</h1>
                     </header>
-                    <body>
+                    <div>
                         <div>
                             <div className="d-flex justify-content-around flex-wrap m-3">
                                 <div className="border border-dark rounded px-3 d-flex my-3">
@@ -33,7 +33,7 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div>
-                    </body>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,9 +3,29 @@ import './Login.css';
 import Footer from './components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useUserAuth } from './UserAuthContext';
+import { useState } from 'react';
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    let logIn: any = {};
+    logIn = useUserAuth().logIn;
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        setError("");
+        try {
+            await logIn(email, password);
+            navigate("/dashboard");
+        } catch (error) {
+            setError(error as string);
+        }
+    }
+
     return (
         <div>
             <div className="app-baseline-layout">
@@ -15,24 +35,21 @@ function Login() {
                     </div>
                     <h1>Login Below!</h1>
                 </header>
-                <body>
-                    <form action="">
-                        <h2>Username</h2>
+                <div>
+                    <form onSubmit={handleSubmit}>
+                        <h2>Email</h2>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder='e.g. User123' aria-label='username'></input>
+                            <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <h2>Password</h2>
                         <div className="input-group mb-3">
-                            <input type="password" className="form-control" aria-label='password'></input>
+                            <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <div className="input-group mb-3">
-                            <Link to="/dashboard">
-                                <input type="submit" value="Submit"></input>
-                            </Link>
+                            <input type="submit" value="Log in"></input>
                         </div>
                     </form>
-
-                </body>
+                </div>
             </div>
             <Footer />
         </div>

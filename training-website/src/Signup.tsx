@@ -3,11 +3,32 @@ import './Signup.css';
 import Footer from './components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useUserAuth } from './UserAuthContext';
 
 function Signup() {
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+    const [password, setPassword] = useState("");
+    let signUp: any = {};
+    signUp = useUserAuth().signUp;
+    let navigate = useNavigate();
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        setError("");
+        try {
+            await signUp(email, password);
+            navigate("/login");
+        } catch (err) {
+            setError(err as string);
+        }
+    }
+    console.log("console log here")
+
     return (
-        <div>
+        <>
             <div className="app-baseline-layout">
                 <header className="header">
                     <div className="font-awesome-icon">
@@ -15,34 +36,29 @@ function Signup() {
                     </div>
                     <h1>Please fill out your details to create an account</h1>
                 </header>
-                <body>
-                    <form action="">
+                <div>
+                    <form onSubmit={handleSubmit}>
                         <h2>Email Address:</h2>
                         <h4 className="subtitle">The email address you want associating with the account</h4>
                         <div className="input-group mb-3">
-                            <input type="email" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email'></input>
-                        </div>
-                        <h2>Username for site:</h2>
-                        <h4 className="subtitle">The username that will be used to login to your account</h4>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder='e.g. User123' aria-label='username'></input>
+                            <input type="email" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <h2>Password:</h2>
                         <h4 className="subtitle">The password for your account</h4>
                         <div className="input-group mb-3">
-                            <input type="password" className="form-control" aria-label='password'></input>
+                            <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <div className="input-group mb-3">
-                            <Link to="/login">
-                                <input type="submit" value="Submit"></input>
-                            </Link>
+                            <input type="submit" value="Sign up"></input>
                         </div>
                     </form>
-
-                </body>
+                    <h4>
+                        Already have an account? <Link to="/">Log In</Link>
+                    </h4>
+                </div>
             </div>
             <Footer />
-        </div>
+        </>
     )
 }
 

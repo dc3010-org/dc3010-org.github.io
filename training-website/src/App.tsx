@@ -5,6 +5,7 @@ import Signup from './Signup';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import { UserAuthContextProvider } from './UserAuthContext';
+import ProtectedRoute from './ProtectedRoute';
 
 const Main = () => {
     const [token, setToken] = useState();
@@ -14,7 +15,7 @@ const Main = () => {
             <Route path='/' element={<Home />}></Route>
             <Route path='/signup' element={<Signup />}></Route>
             <Route path='/login' element={<Login />}></Route>
-            <Route path='/dashboard' element={<Dashboard />}></Route>
+            <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}></Route>
         </Routes>
     );
 }
