@@ -8,15 +8,21 @@ function Sidebar() {
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                    <p className="fs-3 fw-light ps-3">Navigation</p>
                     <ul className="nav flex-column">
                         <li className="nav-item">
-                            <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                                Dashboardpenis
+                            <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/dashboard">
+                                Dashboard
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link d-flex align-items-center gap-2" href="#">
-                                Orders
+                            <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/all-training">
+                                View Training Packs
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link d-flex align-items-center gap-2" href="/create-training">
+                                Create Training Pack
                             </a>
                         </li>
                     </ul>

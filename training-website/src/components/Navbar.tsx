@@ -21,7 +21,7 @@ function NavBar() {
     return (
         <nav className="navbar navbar-dark bg-dark navbar-style">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">CapTrainimi</a>
+                <a className="navbar-brand" href="/dashboard">CapTrainimi</a>
             </div>
             <div className="p-4 box mt-3 text-center user-data-text">
                 Welcome <br />
