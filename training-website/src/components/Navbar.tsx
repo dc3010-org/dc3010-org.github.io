@@ -29,7 +29,7 @@ function NavBar() {
             </div>
             <div className="d-grid gap-2">
 
-                <button type="button" className="btn btn-outline-secondary btn-lg" aria-label='logout-button' onClick={handleLogout}>
+                <button type="button" className="btn btn-outline-light btn-lg" aria-label='logout-button' onClick={handleLogout}>
                     Log out
                 </button>
 

@@ -8,6 +8,7 @@ import ProtectedRoute from './ProtectedRoute';
 import AllTraining from './AllTraining';
 import CreateTraining from './CreateTraining';
 import ViewTraining from './ViewTraining';
+import './App.css';
 
 const Main = () => {
 
