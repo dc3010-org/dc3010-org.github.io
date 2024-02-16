@@ -3,6 +3,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap";
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavBar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk, faPlus } from '@fortawesome/free-solid-svg-icons';
 import QuestionAnswer from './components/QuestionAnswer';
 import Description from './components/Description';
 import { v4 as randomId, } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Container {
     id: string,
@@ -19,8 +20,6 @@ interface QuestionAnswerContainer extends Container {
 interface DescriptionContainer extends Container {
     type: 'description';
 }
-
-
 
 function CreateTraining() {
     const [containers, setContainers] = useState<Array<Container>>([]);
@@ -49,7 +48,13 @@ function CreateTraining() {
         } else {
             return <Description {...props} />
         }
-    }).map(element => <div className='col-2'>{element}</div>)
+    }).map(element => <div className='col-12'>{element}</div>)
+
+    function saveTrainingData() {
+
+
+        toast.info("Training course has been saved!");
+    }
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -60,10 +65,15 @@ function CreateTraining() {
                         <Sidebar />
                     </div>
                     <div className="col-lg-10 col-12">
-                        <header className="d-flex justify-content-center flex-column">
-                            <h1>Create a training course</h1>
-                            <h2 className="fs-4 fw-light ps-2">Press either button below to get started!</h2>
-                        </header>
+                        <div className="d-flex flex-row">
+                            <div className="flex-grow-1 flex-column">
+                                <h1>Create a training course</h1>
+                                <h2 className="fs-4 fw-light ps-2">Press either button below to get started!</h2>
+                            </div>
+                            <div className="p-2">
+                                <button type="button" className="btn btn-primary btn-lg" aria-label='save-training-course' onClick={saveTrainingData}><FontAwesomeIcon icon={faFloppyDisk} /> Save training course</button>
+                            </div>
+                        </div>
                         <div>
                             <div className="d-flex justify-content-center flex-column">
                                 <div className="row">
@@ -82,6 +92,7 @@ function CreateTraining() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }
