@@ -1,8 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Container.css";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { QuestionAnswerContainer } from "../data/TrainingCourse";
 
-function QuestionAnswer(props: { onDelete: () => void }) {
+function QuestionAnswer(props: { current: QuestionAnswerContainer, onDelete: () => void, onChange: (value: QuestionAnswerContainer) => void }) {
+    const onChange = (prop: keyof QuestionAnswerContainer): React.ChangeEventHandler<HTMLInputElement> => (e) => {
+        props.onChange({
+            ...props.current,
+            [prop]: e.target.value,
+        });
+    };
+
+
     return (
         <div>
             <div className="d-flex justify-content-around flex-wrap m-3 bg-success bg-opacity-10">
@@ -11,9 +20,9 @@ function QuestionAnswer(props: { onDelete: () => void }) {
                         <button className="btn btn-danger" onClick={props.onDelete}><FontAwesomeIcon icon={faX} /></button>
                     </div>
                     <p>Question</p>
-                    <input type="text" className="form-control" placeholder='' aria-label='question'></input>
+                    <input type="text" className="form-control" placeholder='' aria-label='question' value={props.current.question} onChange={onChange('question')}></input>
                     <p>Answer</p>
-                    <input type="text" className="form-control" aria-label='answer'></input>
+                    <input type="text" className="form-control" aria-label='answer' value={props.current.answer} onChange={onChange('answer')}></input>
                 </div>
             </div>
         </div>

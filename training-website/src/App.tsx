@@ -9,6 +9,7 @@ import AllTraining from './AllTraining';
 import CreateTraining from './CreateTraining';
 import ViewTraining from './ViewTraining';
 import './App.css';
+import { FirebaseProvider } from './FirebaseProvider';
 
 const Main = () => {
 
@@ -27,9 +28,11 @@ const Main = () => {
 
 function App() {
     return (
-        <UserAuthContextProvider>
-            <Main />
-        </UserAuthContextProvider>
+        <FirebaseProvider>
+            <UserAuthContextProvider>
+                <Main />
+            </UserAuthContextProvider>
+        </FirebaseProvider>
 
     )
 }

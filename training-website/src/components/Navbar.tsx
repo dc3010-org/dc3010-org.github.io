@@ -25,7 +25,7 @@ function NavBar() {
             </div>
             <div className="p-4 box mt-3 text-center user-data-text">
                 Welcome <br />
-                {user && user.email}
+                {user.email}
             </div>
             <div className="d-grid gap-2">
 

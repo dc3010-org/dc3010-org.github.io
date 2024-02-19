@@ -8,51 +8,77 @@ import Description from './components/Description';
 import { v4 as randomId, } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 
-interface Container {
-    id: string,
-    type: 'qa' | 'description';
-}
+import { doc, setDoc } from "firebase/firestore";
+import { useUserAuth } from './UserAuthContext';
+import { getAllByLabelText } from '@testing-library/react';
+import { Container, DescriptionContainer, QuestionAnswerContainer } from './data/TrainingCourse';
+import { useFirebase } from './FirebaseProvider';
 
-interface QuestionAnswerContainer extends Container {
-    type: 'qa';
-}
-
-interface DescriptionContainer extends Container {
-    type: 'description';
-}
 
 function CreateTraining() {
     const [containers, setContainers] = useState<Array<Container>>([]);
+
+    const { createTrainingCourse } = useFirebase();
+
 
     function addContainerFunc(type: 'qa' | 'description'): React.MouseEventHandler {
         return (e) => {
             e.preventDefault();
 
-            let container = {
+            let container: Container = {
                 id: randomId(),
                 type,
             };
+
+            if (type === 'qa') {
+                const qa = container as QuestionAnswerContainer;
+                qa.question = '';
+                qa.answer = '';
+            }
 
 
             setContainers([...containers, container]);
         };
     }
 
-    const renderedContainers = containers.map(container => {
+    const renderedContainers = containers.map((container, index) => {
         const props = {
             key: container.id,
             onDelete: () => setContainers(containers.filter(e => e.id !== container.id)),
+            onChange: (newValue: Container) => {
+                const newContainers = [...containers];
+                newContainers[index] = newValue;
+                setContainers(newContainers);
+            },
         }
+
         if (container.type === 'qa') {
-            return <QuestionAnswer {...props} />
+            return <QuestionAnswer {...props} current={container as QuestionAnswerContainer} />
         } else {
             return <Description {...props} />
         }
     }).map(element => <div className='col-12'>{element}</div>)
 
-    function saveTrainingData() {
+    let user: any = {};
+    user = useUserAuth().user;
+    async function saveTrainingData() {
+        // training_course:{
+        //  author:
+        //  data:[
+        //         {
+        //             question:
+        //             answer:
+        //         },
+        //         {
+        //             description:
+        //         }
+        //     ]
+        // }
 
-
+        await createTrainingCourse({
+            parts: containers,
+            title: 'Testing 1 2 3'
+        });
         toast.info("Training course has been saved!");
     }
 

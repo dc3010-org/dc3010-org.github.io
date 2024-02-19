@@ -1,7 +1,7 @@
-.background-image{
+.background-image {
   background-image:
-    linear-gradient(45deg, #84dad6,#22222200 ),
-    url('../images/Laptop.jpg');
+    linear-gradient(45deg, #84dad6, #22222200),
+    url('../public/images/Laptop.jpg');
   background-position: center;
   background-size: cover;
 }
@@ -9,16 +9,18 @@
 .header-spacing {
   padding: 5%;
 }
+
 .home-title-text {
   font-size: 15vh;
-  color: 	#1c41af;
+  color: #1c41af;
 }
+
 .font-awesome-icon {
   text-align: center;
   font-size: 8vh;
 }
 
-.body-layout{
-  background-color: rgba(1,1,1,0);
+.body-layout {
+  background-color: rgba(1, 1, 1, 0);
   font-size: 5vh;
 }

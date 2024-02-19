@@ -7,6 +7,8 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 
+// we'll sort out typing for this later lol
+
 const userAuthContext = createContext();
 
 export function useUserAuth() {
