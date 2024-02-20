@@ -6,13 +6,19 @@ import TrainingContainer from "./components/TrainingContainer";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TrainingCourse } from "./data/TrainingCourse";
+import React from "react";
 
 function AllTraining() {
+    let { loadingState, trainingCourses, getCoursesByTitle } = useFirebase();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [trainingContainerValues, setTrainingContainerValues] = useState<Array<TrainingCourse>>([]);
 
-    let { loadingState, trainingCourses, getCoursesByTitle } = useFirebase();
+
+    React.useEffect(() => {
+        setSearchTerm('');
+        setTrainingContainerValues(trainingCourses);
+    }, [loadingState]);
 
     if (loadingState === LoadingState.Loading) {
         return <p>Loading...</p>
@@ -20,12 +26,19 @@ function AllTraining() {
         return <p>Whoops! *Something* went wrong!</p>
     }
 
-    setTrainingContainerValues(trainingCourses);
+
 
     let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} />);
 
     function searchByTitle() {
-        setTrainingContainerValues(getCoursesByTitle(searchTerm));
+        let newCourses;
+        if (!searchTerm.trim().length) {
+            newCourses = trainingCourses;
+        } else {
+            newCourses = getCoursesByTitle(searchTerm);
+        }
+
+        setTrainingContainerValues(newCourses);
     }
 
     return (
@@ -41,8 +54,20 @@ function AllTraining() {
                             <h1>Available Training Courses:</h1>
                             <div className="border border-primary-subtle rounded px-3 d-flex my-3">
                                 <div className="input-group m-3">
-                                    <input type="text" className="form-control" placeholder='Excel tools, Word etc.' aria-label='search-term' onChange={(e) => setSearchTerm(e.target.value)}></input>
-                                    <button type="button" className="btn btn-primary btn-lg" aria-label='search-training-course' onClick={searchByTitle}><FontAwesomeIcon icon={faMagnifyingGlass} /> Search for training course</button>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder='Excel tools, Word etc.'
+                                        aria-label='search-term'
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && searchByTitle()} />
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-lg"
+                                        aria-label='search-training-course'
+                                        onClick={searchByTitle}>
+                                        <FontAwesomeIcon icon={faMagnifyingGlass} /> Search for training course
+                                    </button>
                                 </div>
                             </div>
                         </header>
