@@ -16,6 +16,7 @@ interface FirebaseContextType {
     trainingCourses: TrainingCourse[];
     loadingState: LoadingState,
     createTrainingCourse: (newTrainingCourse: Omit<TrainingCourse, 'id'>) => Promise<string>;
+    getCoursesByTitle: (title: string) => Array<TrainingCourse>;
 }
 
 
@@ -72,7 +73,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
     const getCoursesByTitle = (title: string) => {
         return trainingCourses.filter(course => course.title.includes(title));
-    }
+    };
 
     React.useEffect(() => {
         if (loadingState !== LoadingState.Loading) {
@@ -89,6 +90,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         loadingState,
         trainingCourses,
         createTrainingCourse,
+        getCoursesByTitle,
     }}>
         {children}
     </FirebaseContext.Provider>

@@ -1,11 +1,18 @@
+import { useState } from "react";
 import { LoadingState, useFirebase } from "./FirebaseProvider";
 import NavBar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import TrainingContainer from "./components/TrainingContainer";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { TrainingCourse } from "./data/TrainingCourse";
 
 function AllTraining() {
 
-    const { loadingState, trainingCourses } = useFirebase();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [trainingContainerValues, setTrainingContainerValues] = useState<Array<TrainingCourse>>([]);
+
+    let { loadingState, trainingCourses, getCoursesByTitle } = useFirebase();
 
     if (loadingState === LoadingState.Loading) {
         return <p>Loading...</p>
@@ -13,7 +20,13 @@ function AllTraining() {
         return <p>Whoops! *Something* went wrong!</p>
     }
 
-    const renderedCourses = trainingCourses.map(course => <TrainingContainer course={course} />);
+    setTrainingContainerValues(trainingCourses);
+
+    let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} />);
+
+    function searchByTitle() {
+        setTrainingContainerValues(getCoursesByTitle(searchTerm));
+    }
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -27,12 +40,10 @@ function AllTraining() {
                         <header className="d-flex justify-content-center flex-column">
                             <h1>Available Training Courses:</h1>
                             <div className="border border-primary-subtle rounded px-3 d-flex my-3">
-                                <form>
-                                    <div className="input-group m-3">
-                                        <input type="text" className="form-control" placeholder='Excel tools, Word etc.' aria-label='search-term'></input>
-                                        <input type="submit" value="Search"></input>
-                                    </div>
-                                </form>
+                                <div className="input-group m-3">
+                                    <input type="text" className="form-control" placeholder='Excel tools, Word etc.' aria-label='search-term' onChange={(e) => setSearchTerm(e.target.value)}></input>
+                                    <button type="button" className="btn btn-primary btn-lg" aria-label='search-training-course' onClick={searchByTitle}><FontAwesomeIcon icon={faMagnifyingGlass} /> Search for training course</button>
+                                </div>
                             </div>
                         </header>
                         <div>
