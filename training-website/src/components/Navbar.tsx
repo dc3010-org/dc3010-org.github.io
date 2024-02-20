@@ -19,23 +19,25 @@ function NavBar() {
     };
 
     return (
-        <nav className="navbar navbar-dark bg-dark navbar-style">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/dashboard">CapTrainimi</a>
-            </div>
-            <div className="p-4 box mt-3 text-center user-data-text">
-                Welcome <br />
-                {user.email}
-            </div>
-            <div className="d-grid gap-2">
+        <div className="d-inline-flex">
+            <nav className="navbar navbar-dark bg-dark navbar-style vw-100">
+                <div className="me-auto mx-3">
+                    <a className="navbar-brand fs-1" href="/dashboard">CapTrainimi</a>
+                </div>
+                <div className="p-4 text-center user-data-text">
+                    <p>Logged in as: <br />
+                        {user.email}
+                    </p>
+                </div>
+                <div className="m-3">
+                    <button type="button" className="btn btn-outline-light btn-lg" aria-label='logout-button' onClick={handleLogout}>
+                        Log out
+                    </button>
+                </div>
 
-                <button type="button" className="btn btn-outline-light btn-lg" aria-label='logout-button' onClick={handleLogout}>
-                    Log out
-                </button>
-
-            </div>
-            <button className="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Toggle offcanvas</button>
-        </nav>
+                <button className="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Toggle offcanvas</button>
+            </nav>
+        </div>
     );
 }
 

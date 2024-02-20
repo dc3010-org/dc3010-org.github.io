@@ -13,10 +13,13 @@ import { useUserAuth } from './UserAuthContext';
 import { getAllByLabelText } from '@testing-library/react';
 import { Container, DescriptionContainer, QuestionAnswerContainer } from './data/TrainingCourse';
 import { useFirebase } from './FirebaseProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 function CreateTraining() {
     const [containers, setContainers] = useState<Array<Container>>([]);
+    const navigate = useNavigate();
+
 
     const { createTrainingCourse } = useFirebase();
 
@@ -61,6 +64,7 @@ function CreateTraining() {
 
     let user: any = {};
     user = useUserAuth().user;
+    const [title, setTitle] = useState("");
     async function saveTrainingData() {
         // training_course:{
         //  author:
@@ -77,9 +81,15 @@ function CreateTraining() {
 
         await createTrainingCourse({
             parts: containers,
-            title: 'Testing 1 2 3'
+            author: user.email,
+            title: title
         });
         toast.info("Training course has been saved!");
+        try {
+            setTimeout(() => navigate("/dashboard"), 3000);
+        } catch {
+
+        }
     }
 
     return (
@@ -103,6 +113,15 @@ function CreateTraining() {
                         <div>
                             <div className="d-flex justify-content-center flex-column">
                                 <div className="row">
+                                    <div className="d-inline-flex flex-column m-3 p-3 bg-success bg-opacity-10 mx-auto">
+                                        <div className="">
+                                            <h2>Training course title:</h2>
+                                        </div>
+                                        <div className="m-2 vw-auto">
+                                            <input type="text" className="form-control" aria-label='title' onChange={(e) => setTitle(e.target.value)}></input>
+                                        </div>
+
+                                    </div>
                                     {renderedContainers}
                                 </div>
                                 <div className="border border-secondary-subtle border-3 border-style-dashed rounded px-3 d-flex my-3 mx-auto">

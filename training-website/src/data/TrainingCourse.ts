@@ -20,5 +20,6 @@ export interface TrainingCourse {
     // TODO: probably put this somewhere else
     id: string,
     title: string,
+    author: string,
     parts: Container[];
 }

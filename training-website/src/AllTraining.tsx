@@ -1,29 +1,7 @@
 import { LoadingState, useFirebase } from "./FirebaseProvider";
 import NavBar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import { TrainingCourse } from "./data/TrainingCourse";
-
-
-function MyComponent({ course }: { course: TrainingCourse }) {
-    return <div className="border border-dark rounded px-3 d-flex my-3">
-        <img className="w-50 border border-muted my-3"
-            src="/images/OnlineLearning.jpg" alt="Online Learning" />
-        <div className="flex-grow-1 m-3">
-            <h2>
-                {course.title}
-            </h2>
-            <p className="text-muted">
-                {course.id}
-            </p>
-            <h2>
-                --------
-            </h2>
-            <h2 className="text-muted">
-                Completion status: fucked
-            </h2>
-        </div>
-    </div>
-}
+import TrainingContainer from "./components/TrainingContainer";
 
 function AllTraining() {
 
@@ -35,9 +13,7 @@ function AllTraining() {
         return <p>Whoops! *Something* went wrong!</p>
     }
 
-
-
-    const renderedCourses = trainingCourses.map(course => <MyComponent course={course} />);
+    const renderedCourses = trainingCourses.map(course => <TrainingContainer course={course} />);
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -62,25 +38,6 @@ function AllTraining() {
                         <div>
                             <div>
                                 <div className="d-flex justify-content-around flex-wrap m-3">
-                                    <div className="border border-dark rounded px-3 d-flex my-3">
-                                        <img className="w-50 border border-muted my-3"
-                                            src="/images/OnlineLearning.jpg" alt="Online Learning" />
-                                        <div className="flex-grow-1 m-3">
-                                            <h2>
-                                                Title of training
-                                            </h2>
-                                            <p className="text-muted">
-                                                Description of training
-                                            </p>
-                                            <h2>
-                                                --------
-                                            </h2>
-                                            <h2 className="text-muted">
-                                                Completion status
-                                            </h2>
-                                        </div>
-                                    </div>
-
                                     {renderedCourses}
                                 </div>
 
