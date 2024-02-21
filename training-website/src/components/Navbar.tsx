@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../UserAuthContext";
 import './Navbar.css';
 
@@ -22,7 +22,7 @@ function NavBar() {
         <div className="d-inline-flex">
             <nav className="navbar navbar-dark bg-dark navbar-style vw-100">
                 <div className="me-auto mx-3">
-                    <a className="navbar-brand fs-1" href="/dashboard">CapTrainimi</a>
+                    <Link className="navbar-brand fs-1" to="/dashboard">CapTrainimi</Link>
                 </div>
                 <div className="p-4 text-center user-data-text">
                     <p>Logged in as: <br />

@@ -30,10 +30,8 @@ function App() {
     return (
         <UserAuthContextProvider>
             <FirebaseProvider>
-
                 <Main />
             </FirebaseProvider>
-
         </UserAuthContextProvider>
 
     )

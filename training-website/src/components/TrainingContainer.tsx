@@ -6,9 +6,6 @@ import React from "react";
 function TrainingContainer({ course }: { course: TrainingCourse }) {
     let { userData, updateUserTrainingCourses } = useFirebase();
 
-    const [currentUserData, setCurrentUserData] = useState<User | undefined>();
-    React.useEffect(() => setCurrentUserData(userData), [LoadingState]);
-
     let enrollElement;
     if (userData?.trainingCourseIds !== undefined && userData?.trainingCourseIds.includes(course.id)) {
         enrollElement = <button
@@ -29,7 +26,12 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
     }
 
     function handleEnroll(): void {
-        updateUserTrainingCourses(currentUserData.email, course.id)
+        if (!userData) {
+            throw new Error('User data not yet loaded!');
+        }
+        if (!userData.email) return;
+
+        updateUserTrainingCourses(userData.uid, course.id)
     }
 
     return (

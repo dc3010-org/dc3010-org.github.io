@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, database as db } from './firebase';
-import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, limit, query, updateDoc, where } from 'firebase/firestore';
 import { TrainingCourse } from './data/TrainingCourse';
-import { getAuth } from 'firebase/auth';
-
+import { useUserAuth } from './UserAuthContext';
 
 export interface User {
     uid: string;
@@ -46,6 +45,8 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
     const [loadingState, setLoadingState] = React.useState(LoadingState.Loading);
     const [trainingCourses, setTrainingCourses] = React.useState<TrainingCourse[]>([]);
     const [userData, setUserData] = React.useState<User>();
+
+    const authedUser = useUserAuth().user;
 
 
     const fetchTrainingCourses = async () => {
@@ -94,11 +95,26 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
     const getUserByEmail = async () => {
         const userRef = collection(db, 'users');
-        const user = await getDocs(
-            query(userRef, where("email", "==", getAuth().currentUser != null ? getAuth().currentUser?.email : "no user")
-            ));
+        console.log(authedUser);
+        const email = authedUser.email;
+        console.log(email);
+        const user = await getDocs(query(
+            userRef,
+            where("email", "==", authedUser.email),
+            limit(1),
+        ));
 
-        setUserData(user as unknown as User)
+        if (user.docs.length === 0) {
+            throw new Error('No user document registered for authed user');
+        }
+
+        const document = user.docs[0];
+        const userData = {
+            uid: document.id,
+            ...document.data()
+        } as User;
+
+        setUserData(userData)
     };
 
     const updateUserTrainingCourses = async (userId: string, trainingCourseId: string) => {
@@ -109,14 +125,15 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
     }
 
     React.useEffect(() => {
-        if (loadingState !== LoadingState.Loading) {
+        if (loadingState !== LoadingState.Loading || authedUser === null) {
             return;
         }
+
         getUserByEmail();
         fetchTrainingCourses().then(() => {
             setLoadingState(LoadingState.Success);
         });
-    }, [loadingState]);
+    }, [loadingState, authedUser]);
 
 
     return <FirebaseContext.Provider value={{

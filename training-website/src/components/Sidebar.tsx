@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 function Sidebar() {
     return <>
@@ -11,19 +12,19 @@ function Sidebar() {
                     <p className="fs-3 fw-light ps-3">Navigation</p>
                     <ul className="nav flex-column">
                         <li className="nav-item">
-                            <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/dashboard">
+                            <Link className="nav-link d-flex align-items-center gap-2 active" aria-current="page" to="/dashboard">
                                 Dashboard
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/all-training">
+                            <Link className="nav-link d-flex align-items-center gap-2 active" aria-current="page" to="/all-training">
                                 View Training Packs
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link d-flex align-items-center gap-2" href="/create-training">
+                            <Link className="nav-link d-flex align-items-center gap-2" to="/create-training">
                                 Create Training Pack
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
