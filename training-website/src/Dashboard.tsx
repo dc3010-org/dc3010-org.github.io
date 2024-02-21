@@ -19,7 +19,7 @@ function Dashboard() {
                                 <div className="d-flex justify-content-around flex-wrap m-3">
                                     <div className="border border-dark rounded px-3 d-flex my-3">
                                         <img className="w-50 border border-muted my-3"
-                                            src="../images/OnlineLearning.jpg" alt="Online Learning" />
+                                            src="/images/OnlineLearning.jpg" alt="Online Learning" />
                                         <div className="flex-grow-1 m-3">
                                             <h2>
                                                 Title of training

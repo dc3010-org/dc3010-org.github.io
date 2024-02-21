@@ -26,8 +26,6 @@ function AllTraining() {
         return <p>Whoops! *Something* went wrong!</p>
     }
 
-
-
     let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} />);
 
     function searchByTitle() {

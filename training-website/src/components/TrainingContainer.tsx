@@ -1,9 +1,40 @@
+import { useState } from "react";
+import { LoadingState, User, useFirebase } from "../FirebaseProvider";
 import { TrainingCourse } from "../data/TrainingCourse";
+import React from "react";
 
 function TrainingContainer({ course }: { course: TrainingCourse }) {
+    let { userData, updateUserTrainingCourses } = useFirebase();
+
+    const [currentUserData, setCurrentUserData] = useState<User | undefined>();
+    React.useEffect(() => setCurrentUserData(userData), [LoadingState]);
+
+    let enrollElement;
+    if (userData?.trainingCourseIds !== undefined && userData?.trainingCourseIds.includes(course.id)) {
+        enrollElement = <button
+            type="button"
+            className="btn btn-secondary btn-lg"
+            aria-label='disabled-enroll-button'
+            disabled>
+            Already enrolled!
+        </button>
+    } else {
+        enrollElement = <button
+            type="button"
+            className="btn btn-success btn-lg"
+            aria-label='enroll-button'
+            onClick={handleEnroll}>
+            Enroll!
+        </button>
+    }
+
+    function handleEnroll(): void {
+        updateUserTrainingCourses(currentUserData.email, course.id)
+    }
+
     return (
         <div className="border border-dark rounded px-3 d-flex my-3">
-            <img className="w-50 border border-muted my-3"
+            <img className="w-25 border border-muted my-3"
                 src="/images/OnlineLearning.jpg" alt="Online Learning" />
             <div className="flex-grow-1 m-3">
                 <h2>
@@ -18,6 +49,9 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
                 <h2 className="text-muted">
                     Completion status:
                 </h2>
+                <div>
+                    {enrollElement}
+                </div>
             </div>
         </div>
     )

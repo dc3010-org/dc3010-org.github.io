@@ -6,6 +6,7 @@ import { faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
+import { useFirebase } from './FirebaseProvider';
 
 function Signup() {
     const [email, setEmail] = useState("");
@@ -15,17 +16,27 @@ function Signup() {
     signUp = useUserAuth().signUp;
     let navigate = useNavigate();
 
+
+    const { createUser } = useFirebase();
+
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setError("");
         try {
             await signUp(email, password);
+            saveUserData();
             navigate("/login");
         } catch (err) {
             setError(err as string);
         }
     }
-    console.log("console log here")
+    async function saveUserData() {
+        await createUser({
+            email: email,
+            role: "1",
+            trainingCourseIds: []
+        });
+    }
 
     return (
         <>

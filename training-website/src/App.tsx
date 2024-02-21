@@ -28,11 +28,13 @@ const Main = () => {
 
 function App() {
     return (
-        <FirebaseProvider>
-            <UserAuthContextProvider>
+        <UserAuthContextProvider>
+            <FirebaseProvider>
+
                 <Main />
-            </UserAuthContextProvider>
-        </FirebaseProvider>
+            </FirebaseProvider>
+
+        </UserAuthContextProvider>
 
     )
 }
