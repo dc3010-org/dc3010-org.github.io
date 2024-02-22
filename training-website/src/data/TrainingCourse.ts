@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 
 
 
@@ -22,4 +23,5 @@ export interface TrainingCourse {
     title: string,
     author: string,
     parts: Container[];
+    createdAt: Timestamp;
 }

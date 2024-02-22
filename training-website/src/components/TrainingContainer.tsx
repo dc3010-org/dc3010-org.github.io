@@ -35,11 +35,11 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
     }
 
     return (
-        <div className="border border-dark rounded px-3 d-flex my-3">
+        <div className="border border-dark rounded px-3 d-flex my-3 mw-100">
             <img className="w-25 border border-muted my-3"
                 src="/images/OnlineLearning.jpg" alt="Online Learning" />
-            <div className="flex-grow-1 m-3">
-                <h2>
+            <div className="flex-grow-1 m-3 w-75">
+                <h2 className="text-overflow">
                     {course.title}
                 </h2>
                 <p className="text-muted">

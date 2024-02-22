@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, database as db } from './firebase';
-import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, limit, query, updateDoc, where } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, limit, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 import { TrainingCourse } from './data/TrainingCourse';
 import { useUserAuth } from './UserAuthContext';
 
@@ -14,9 +14,10 @@ export interface User {
 interface FirebaseContextType {
     trainingCourses: TrainingCourse[];
     loadingState: LoadingState,
-    createTrainingCourse: (newTrainingCourse: Omit<TrainingCourse, 'id'>) => Promise<string>;
+    createTrainingCourse: (newTrainingCourse: Omit<TrainingCourse, 'id' | 'createdAt'>) => Promise<string>;
     getCoursesByTitle: (title: string) => Array<TrainingCourse>;
     getCoursesByAuthor: (user: string) => Array<TrainingCourse>;
+    getCourseById: (trainingCourseId: string) => TrainingCourse | undefined;
     createUser: (newuser: Omit<User, 'uid'>) => Promise<string>;
     userData: User | undefined;
     updateUserTrainingCourses: (userId: string, trainingCourseId: string) => Promise<void>;
@@ -62,11 +63,14 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
         setTrainingCourses(trainingCourseData as unknown as TrainingCourse[]);
     };
-    const createTrainingCourse = async (trainingCourse: Omit<TrainingCourse, 'id'>) => {
+    const createTrainingCourse = async (trainingCourse: Omit<TrainingCourse, 'id' | 'createdAt'>) => {
         const trainingCourseRef = collection(db, 'training-courses');
 
         // add new document
-        const output = await addDoc(trainingCourseRef, trainingCourse);
+        const output = await addDoc(trainingCourseRef, {
+            ...trainingCourse,
+            createdAt: serverTimestamp()
+        });
 
         // how to update a doc:
         // const document = doc(db, 'training-courses', output.id);
@@ -75,7 +79,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         setLoadingState(LoadingState.Loading);
         return output.id;
     };
-
+    console.log(trainingCourses)
 
     const getCoursesByTitle = (title: string) => {
         return trainingCourses.filter(course => course.title.includes(title));
@@ -83,6 +87,10 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
     const getCoursesByAuthor = (user: string) => {
         return trainingCourses.filter(course => course.author.includes(user));
+    }
+
+    const getCourseById = (trainingCourseId: string) => {
+        return trainingCourses.filter(course => course.id.includes(trainingCourseId)).at(0);
     }
 
     const createUser = async (user: Omit<User, 'uid'>) => {
@@ -93,11 +101,8 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         return output.id;
     };
 
-    const getUserByEmail = async () => {
+    const fetchCurrentUser = async () => {
         const userRef = collection(db, 'users');
-        console.log(authedUser);
-        const email = authedUser.email;
-        console.log(email);
         const user = await getDocs(query(
             userRef,
             where("email", "==", authedUser.email),
@@ -122,19 +127,28 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         const output = await updateDoc(document, {
             trainingCourseIds: arrayUnion(trainingCourseId)
         });
+        setUserData({
+            ...userData!,
+            trainingCourseIds: [...userData?.trainingCourseIds!, trainingCourseId]
+        })
     }
+
+    //userById(userId: string) => User (lim 1, to assign training to user)
 
     React.useEffect(() => {
         if (loadingState !== LoadingState.Loading || authedUser === null) {
             return;
         }
 
-        getUserByEmail();
+        fetchCurrentUser();
         fetchTrainingCourses().then(() => {
             setLoadingState(LoadingState.Success);
         });
     }, [loadingState, authedUser]);
 
+    if (loadingState !== LoadingState.Success) {
+        return (<p>Loading</p>)
+    }
 
     return <FirebaseContext.Provider value={{
         loadingState,
@@ -142,6 +156,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         createTrainingCourse,
         getCoursesByTitle,
         getCoursesByAuthor,
+        getCourseById,
         createUser,
         userData,
         updateUserTrainingCourses,

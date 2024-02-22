@@ -1,3 +1,9 @@
 .border-style-dashed {
     border-style: dashed !important;
 }
+
+.text-overflow {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}

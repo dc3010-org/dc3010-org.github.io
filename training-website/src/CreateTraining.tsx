@@ -82,7 +82,7 @@ function CreateTraining() {
         await createTrainingCourse({
             parts: containers,
             author: user.email,
-            title: title
+            title: title,
         });
         toast.info("Training course has been saved!");
         try {
