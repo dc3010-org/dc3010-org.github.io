@@ -37,6 +37,7 @@ export const useFirebase = (): FirebaseContextType => {
 export enum LoadingState {
     Success,
     Loading,
+    PendingLogin,
     Error,
 }
 
@@ -136,7 +137,10 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
     //userById(userId: string) => User (lim 1, to assign training to user)
 
     React.useEffect(() => {
-        if (loadingState !== LoadingState.Loading || authedUser === null) {
+        if (![LoadingState.PendingLogin, LoadingState.Loading].includes(loadingState) || authedUser === null) {
+            if (authedUser === null) {
+                setLoadingState(LoadingState.PendingLogin);
+            }
             return;
         }
 
@@ -146,7 +150,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         });
     }, [loadingState, authedUser]);
 
-    if (loadingState !== LoadingState.Success) {
+    if (![LoadingState.Success, LoadingState.PendingLogin].includes(loadingState) || (loadingState === LoadingState.PendingLogin && authedUser !== null)) {
         return (<p>Loading</p>)
     }
 
