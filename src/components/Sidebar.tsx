@@ -1,6 +1,20 @@
 import { Link } from "react-router-dom";
+import { useFirebase } from "../FirebaseProvider";
 
 function Sidebar() {
+    let { userData } = useFirebase();
+
+    let createRoleElement;
+
+    if (parseInt(userData?.role!) === 2) {
+        createRoleElement = <li className="nav-item">
+            <Link className="nav-link d-flex align-items-center gap-2" to="/create-training">
+                Create Training Pack
+            </Link>
+        </li>
+    }
+
+
     return <>
         <div className="sidebar border border-right p-0 bg-body-tertiary h-100">
             <div className="offcanvas-lg offcanvas-start bg-body-tertiary" tabIndex={-1} id="offcanvas" aria-labelledby="sidebarMenuLabel">
@@ -21,11 +35,7 @@ function Sidebar() {
                                 View Training Packs
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link d-flex align-items-center gap-2" to="/create-training">
-                                Create Training Pack
-                            </Link>
-                        </li>
+                        {createRoleElement}
                     </ul>
                 </div>
             </div>

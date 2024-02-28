@@ -20,8 +20,17 @@ function CreateTraining() {
     const [containers, setContainers] = useState<Array<Container>>([]);
     const navigate = useNavigate();
 
+    let user: any = {};
+    user = useUserAuth().user;
 
-    const { createTrainingCourse } = useFirebase();
+    const { createTrainingCourse, userData } = useFirebase();
+
+
+    React.useEffect(() => {
+        if (parseInt(userData?.role!) !== 2) {
+            navigate("/dashboard");
+        }
+    })
 
 
     function addContainerFunc(type: 'qa' | 'description'): React.MouseEventHandler {
@@ -62,8 +71,6 @@ function CreateTraining() {
         }
     }).map(element => <div className='col-12'>{element}</div>)
 
-    let user: any = {};
-    user = useUserAuth().user;
     const [title, setTitle] = useState("");
     async function saveTrainingData() {
         // training_course:{
