@@ -2,12 +2,24 @@ import { useState } from "react";
 import { LoadingState, User, useFirebase } from "../FirebaseProvider";
 import { TrainingCourse } from "../data/TrainingCourse";
 import React from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function TrainingContainer({ course }: { course: TrainingCourse }) {
+function TrainingContainer({ course, page }: { course: TrainingCourse, page: string }) {
     let { userData, updateUserTrainingCourses } = useFirebase();
+    const navigate = useNavigate();
 
     let enrollElement;
-    if (userData?.trainingCourseIds !== undefined && userData?.trainingCourseIds.includes(course.id)) {
+
+    if (page === "dashboard") {
+        enrollElement = <button
+            type="button"
+            className="btn btn-primary btn-lg"
+            aria-label='view-training-button'
+            onClick={handleViewtraining}>
+            View Training
+        </button>
+    }
+    else if (userData?.trainingCourseIds !== undefined && userData?.trainingCourseIds.includes(course.id)) {
         enrollElement = <button
             type="button"
             className="btn btn-secondary btn-lg"
@@ -34,6 +46,10 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
         updateUserTrainingCourses(userData.uid, course.id)
     }
 
+    function handleViewtraining() {
+        navigate("/view-training", { state: { search: course.id } });
+    }
+
     return (
         <div className="border border-dark rounded px-3 d-flex my-3 mw-100">
             <img className="w-25 border border-muted my-3"
@@ -43,14 +59,14 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
                     {course.title}
                 </h2>
                 <p className="text-muted">
-                    {course.id}
+                    (ID: {course.id})
                 </p>
                 <h2>
                     --------
                 </h2>
-                <h2 className="text-muted">
-                    Completion status:
-                </h2>
+                <h4 className="text-muted fs-6">
+                    COMPLETION STATUS:
+                </h4>
                 <div>
                     {enrollElement}
                 </div>
@@ -60,3 +76,4 @@ function TrainingContainer({ course }: { course: TrainingCourse }) {
 }
 
 export default TrainingContainer;
+

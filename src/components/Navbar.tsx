@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../UserAuthContext";
 import './Navbar.css';
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function NavBar() {
     let logOut: any = {};
@@ -24,14 +26,14 @@ function NavBar() {
                 <div className="me-auto mx-3">
                     <Link className="navbar-brand fs-1" to="/dashboard">CapTrainimi</Link>
                 </div>
-                <div className="p-4 text-center user-data-text">
+                <div className="p-3 text-center user-data-text">
                     <p>Logged in as: <br />
                         {user.email}
                     </p>
                 </div>
                 <div className="m-3">
                     <button type="button" className="btn btn-outline-light btn-lg" aria-label='logout-button' onClick={handleLogout}>
-                        Log out
+                        <FontAwesomeIcon icon={faRightFromBracket} /> Log out
                     </button>
                 </div>
 

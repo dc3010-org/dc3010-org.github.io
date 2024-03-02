@@ -19,7 +19,7 @@ function Dashboard() {
         setTrainingContainerValues(currentCourses);
     }, [loadingState]);
 
-    let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} />);
+    let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} page={"dashboard"} />);
 
     return (
         <div className="vh-100 d-flex flex-column">

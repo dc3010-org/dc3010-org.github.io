@@ -16,6 +16,28 @@ import { useFirebase } from './FirebaseProvider';
 import { useNavigate } from 'react-router-dom';
 
 
+function getDefaultContainerData(type: Container['type']): Container {
+    const id = randomId();
+
+    switch (type) {
+        case 'qa': {
+            return {
+                id,
+                type,
+                question: '',
+                answer: '',
+            };
+        }
+        case 'description': {
+            return {
+                id,
+                type,
+                description: '',
+            }
+        }
+    }
+}
+
 function CreateTraining() {
     const [containers, setContainers] = useState<Array<Container>>([]);
     const navigate = useNavigate();
@@ -33,22 +55,11 @@ function CreateTraining() {
     })
 
 
-    function addContainerFunc(type: 'qa' | 'description'): React.MouseEventHandler {
+    function addContainerFunc(type: Container['type']): React.MouseEventHandler {
         return (e) => {
             e.preventDefault();
 
-            let container: Container = {
-                id: randomId(),
-                type,
-            };
-
-            if (type === 'qa') {
-                const qa = container as QuestionAnswerContainer;
-                qa.question = '';
-                qa.answer = '';
-            }
-
-
+            const container = getDefaultContainerData(type);
             setContainers([...containers, container]);
         };
     }
@@ -67,7 +78,7 @@ function CreateTraining() {
         if (container.type === 'qa') {
             return <QuestionAnswer {...props} current={container as QuestionAnswerContainer} />
         } else {
-            return <Description {...props} />
+            return <Description {...props} current={container as DescriptionContainer} />
         }
     }).map(element => <div className='col-12'>{element}</div>)
 

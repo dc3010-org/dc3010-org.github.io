@@ -1,8 +1,15 @@
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Container.css";
+import { DescriptionContainer } from "../data/TrainingCourse";
 
-function Description(props: { onDelete: () => void }) {
+function Description(props: { current: DescriptionContainer, onDelete: () => void, onChange: (value: DescriptionContainer) => void }) {
+    const onChange = (prop: keyof DescriptionContainer): React.ChangeEventHandler<HTMLInputElement> => (e) => {
+        props.onChange({
+            ...props.current,
+            [prop]: e.target.value,
+        });
+    };
     return (
         <div>
             <div className="d-flex justify-content-around flex-wrap m-3 bg-info bg-opacity-10">
@@ -11,7 +18,7 @@ function Description(props: { onDelete: () => void }) {
                         <button className="btn btn-danger" onClick={props.onDelete}><FontAwesomeIcon icon={faX} /></button>
                     </div>
                     <p>Description</p>
-                    <input type="text" className="form-control" aria-label='description'></input>
+                    <input type="text" className="form-control" aria-label='description' value={props.current.description} onChange={onChange('description')}></input>
                 </div>
             </div>
         </div>

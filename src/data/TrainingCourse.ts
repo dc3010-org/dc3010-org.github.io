@@ -2,20 +2,26 @@ import { Timestamp } from "firebase/firestore";
 
 
 
-export interface Container {
-    id: string,
-    type: 'qa' | 'description';
-}
-export interface QuestionAnswerContainer extends Container {
+interface BaseQuestionAnswerContainer {
     type: 'qa';
     question: string;
     answer: string;
 }
 
-export interface DescriptionContainer extends Container {
+interface BaseDescriptionContainer {
     type: 'description';
     description: string;
 }
+interface BaseContainer {
+    id: string,
+}
+
+
+export interface QuestionAnswerContainer extends BaseQuestionAnswerContainer, BaseContainer { }
+export interface DescriptionContainer extends BaseDescriptionContainer, BaseContainer { }
+
+
+export type Container = QuestionAnswerContainer | DescriptionContainer;
 
 export interface TrainingCourse {
     // TODO: probably put this somewhere else
