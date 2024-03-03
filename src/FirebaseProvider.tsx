@@ -21,6 +21,7 @@ interface FirebaseContextType {
     createUser: (newuser: Omit<User, 'uid'>) => Promise<string>;
     userData: User | undefined;
     updateUserTrainingCourses: (userId: string, trainingCourseId: string) => Promise<void>;
+    updateUserTrainingCoursesByEmail: (email: string, trainingCourseId: string) => Promise<void>;
 }
 
 
@@ -39,6 +40,12 @@ export enum LoadingState {
     Loading,
     PendingLogin,
     Error,
+}
+
+export class UserNotFoundError extends Error {
+    constructor() {
+        super(`User could not be found with the criteria`);
+    }
 }
 
 
@@ -103,15 +110,19 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
     };
 
     const fetchCurrentUser = async () => {
+        setUserData(await fetchUserByEmail(authedUser.email));
+    }
+
+    const fetchUserByEmail = async (email: string) => {
         const userRef = collection(db, 'users');
         const user = await getDocs(query(
             userRef,
-            where("email", "==", authedUser.email),
+            where("email", "==", email),
             limit(1),
         ));
 
         if (user.docs.length === 0) {
-            throw new Error('No user document registered for authed user');
+            throw new UserNotFoundError();
         }
 
         const document = user.docs[0];
@@ -120,7 +131,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
             ...document.data()
         } as User;
 
-        setUserData(userData)
+        return userData;
     };
 
     const updateUserTrainingCourses = async (userId: string, trainingCourseId: string) => {
@@ -134,7 +145,15 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         })
     }
 
-    //userById(userId: string) => User (lim 1, to assign training to user)
+    const updateUserTrainingCoursesByEmail = async (email: string, trainingCourseId: string) => {
+        const userData = await fetchUserByEmail(email);
+        const userDoc = doc(db, 'users', userData.uid);
+
+        const output = await updateDoc(userDoc, {
+            trainingCourseIds: arrayUnion(trainingCourseId)
+        });
+        return output;
+    }
 
     React.useEffect(() => {
         if (![LoadingState.PendingLogin, LoadingState.Loading].includes(loadingState) || authedUser === null) {
@@ -164,6 +183,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         createUser,
         userData,
         updateUserTrainingCourses,
+        updateUserTrainingCoursesByEmail,
     }}>
         {children}
     </FirebaseContext.Provider>

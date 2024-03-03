@@ -10,30 +10,36 @@ import CreateTraining from './CreateTraining';
 import ViewTraining from './ViewTraining';
 import './App.css';
 import { FirebaseProvider } from './FirebaseProvider';
+import { ToastContainer } from 'react-toastify';
+import NavBar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 
-const Main = () => {
-
-    return (
-        <Routes>
-            <Route path='/' element={<Home />}></Route>
-            <Route path='/signup' element={<Signup />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}></Route>
-            <Route path='/all-training' element={<ProtectedRoute><AllTraining /></ProtectedRoute>}></Route>
-            <Route path='/create-training' element={<ProtectedRoute><CreateTraining /></ProtectedRoute>}></Route>
-            <Route path='/view-training' element={<ProtectedRoute><ViewTraining /></ProtectedRoute>}></Route>
-        </Routes>
-    );
-}
 
 function App() {
+
+    const routes = [
+        { path: '/', element: <Home /> },
+        { path: '/signup', element: <Signup /> },
+        { path: '/login', element: <Login /> },
+        { path: '/dashboard', element: <Dashboard />, authRequired: true, },
+        { path: '/all-training', element: <AllTraining />, authRequired: true },
+        { path: '/create-training', element: <CreateTraining />, authRequired: true },
+        { path: '/view-training', element: <ViewTraining />, authRequired: true },
+    ]
+
+
+    const x = [1, 2, 3].map(e => e + 1); // [ 2, 3, 4]
+
+    const renderedRoutes = routes.map(route => <Route path={route.path} element={<ProtectedRoute authRequired={route.authRequired}>{route.element}</ProtectedRoute>} />);
+
     return (
         <UserAuthContextProvider>
             <FirebaseProvider>
-                <Main />
+                <Routes>
+                    {renderedRoutes}
+                </Routes>
             </FirebaseProvider>
         </UserAuthContextProvider>
-
     )
 }
 

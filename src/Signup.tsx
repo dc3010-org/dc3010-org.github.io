@@ -48,23 +48,21 @@ function Signup() {
                     <h1>Please fill out your details to create an account</h1>
                 </header>
                 <div>
-                    <form onSubmit={handleSubmit}>
-                        <h2>Email Address:</h2>
-                        <h4 className="subtitle">The email address you want associating with the account</h4>
-                        <div className="input-group mb-3">
-                            <input type="email" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
-                        </div>
-                        <h2>Password:</h2>
-                        <h4 className="subtitle">The password for your account</h4>
-                        <div className="input-group mb-3">
-                            <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
-                        </div>
-                        <div className="input-group mb-3">
-                            <input type="submit" value="Sign up"></input>
-                        </div>
-                    </form>
+                    <h2>Email Address:</h2>
+                    <h4 className="subtitle">The email address you want associating with the account</h4>
+                    <div className="input-group mb-3">
+                        <input type="email" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
+                    </div>
+                    <h2>Password:</h2>
+                    <h4 className="subtitle">The password for your account</h4>
+                    <div className="input-group mb-3">
+                        <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
+                    </div>
+                    <div className="input-group mb-3">
+                        <button type="button" className="btn btn-primary btn-lg" aria-label='signup-button' onClick={handleSubmit}>Sign up!</button>
+                    </div>
                     <h4>
-                        Already have an account? <Link to="/">Log In</Link>
+                        Already have an account? <Link to="/login">Log In</Link>
                     </h4>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import './Login.css';
 import Footer from './components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from './UserAuthContext';
 import { useState } from 'react';
 
@@ -36,19 +36,20 @@ function Login() {
                     <h1>Login Below!</h1>
                 </header>
                 <div>
-                    <form onSubmit={handleSubmit}>
-                        <h2>Email</h2>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
-                        </div>
-                        <h2>Password</h2>
-                        <div className="input-group mb-3">
-                            <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
-                        </div>
-                        <div className="input-group mb-3">
-                            <input type="submit" value="Log in"></input>
-                        </div>
-                    </form>
+                    <h2>Email</h2>
+                    <div className="input-group mb-3">
+                        <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
+                    </div>
+                    <h2>Password</h2>
+                    <div className="input-group mb-3">
+                        <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
+                    </div>
+                    <div className="input-group mb-3">
+                        <button type="button" className="btn btn-primary btn-lg" aria-label='signup-button' onClick={handleSubmit}>Log In!</button>
+                    </div>
+                    <h4>
+                        Haven't got an account? <Link to="/signup">Sign up!</Link>
+                    </h4>
                 </div>
             </div>
             <Footer />

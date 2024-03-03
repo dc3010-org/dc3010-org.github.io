@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { LoadingState, User, useFirebase } from "../FirebaseProvider";
+import { LoadingState, User, UserNotFoundError, useFirebase } from "../FirebaseProvider";
 import { TrainingCourse } from "../data/TrainingCourse";
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function TrainingContainer({ course, page }: { course: TrainingCourse, page: string }) {
-    let { userData, updateUserTrainingCourses } = useFirebase();
+    let { userData, updateUserTrainingCourses, updateUserTrainingCoursesByEmail } = useFirebase();
+    const [assignedEmail, setAssignedEmail] = useState("");
     const navigate = useNavigate();
 
     let enrollElement;
+    let assignElement;
 
     if (page === "dashboard") {
         enrollElement = <button
@@ -37,6 +42,24 @@ function TrainingContainer({ course, page }: { course: TrainingCourse, page: str
         </button>
     }
 
+    if (userData && parseInt(userData.role!) === 2) {
+        assignElement = <div className="dropdown">
+            <button type="button" className="btn btn-secondary btn-lg dropdown-toggle ms-3" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                <FontAwesomeIcon icon={faPaperPlane} /> Assign to
+            </button>
+            <form className="dropdown-menu p-4" style={{ width: '300%' }}>
+                <div className="input-group">
+                    <input type="email" className="form-control" id="assign-email-input" placeholder="email@example.com" onChange={(e) => setAssignedEmail(e.target.value)}></input>
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        aria-label='assign-button'
+                        onClick={handleAssign}>Assign</button>
+                </div>
+            </form>
+        </div>
+    }
+
     function handleEnroll(): void {
         if (!userData) {
             throw new Error('User data not yet loaded!');
@@ -44,6 +67,22 @@ function TrainingContainer({ course, page }: { course: TrainingCourse, page: str
         if (!userData.email) return;
 
         updateUserTrainingCourses(userData.uid, course.id)
+    }
+
+    async function handleAssign(): Promise<void> {
+        if (assignedEmail !== "") {
+            try {
+                await updateUserTrainingCoursesByEmail(assignedEmail, course.id);
+            } catch (error) {
+                if (error instanceof UserNotFoundError) {
+                    toast.warn('User not found!');
+                } else {
+                    throw error;
+                }
+            }
+        } else {
+            toast.warn("No email found for user, please try again.");
+        }
     }
 
     function handleViewtraining() {
@@ -67,10 +106,12 @@ function TrainingContainer({ course, page }: { course: TrainingCourse, page: str
                 <h4 className="text-muted fs-6">
                     COMPLETION STATUS:
                 </h4>
-                <div>
+                <div className="d-flex flex-row x-3">
                     {enrollElement}
+                    {assignElement}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

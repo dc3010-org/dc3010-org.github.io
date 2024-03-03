@@ -19,10 +19,10 @@ function Home() {
         <div className="body-layout">
           <div className="d-grid gap-2">
             <Link to="/login">
-              <button type="button" className="btn btn-outline-primary btn-lg" aria-label='login-button'>Log in</button>
+              <button type="button" className="background-white btn btn-outline-primary btn-lg w-100" aria-label='login-button'>Log in</button>
             </Link>
             <Link to="/signup">
-              <button type="button" className="btn btn-outline-primary btn-lg" aria-label='signup-button'>Signup with email</button>
+              <button type="button" className="background-white btn btn-outline-primary btn-lg w-100" aria-label='signup-button'>Signup with email</button>
             </Link>
           </div>
         </div>

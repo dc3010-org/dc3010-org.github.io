@@ -1,5 +1,5 @@
 .app-baseline-layout {
-  min-height: 100vh;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,4 +7,10 @@
   font-size: calc(10px + 2vmin);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #2f0c70;
+}
+
+#root>div {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

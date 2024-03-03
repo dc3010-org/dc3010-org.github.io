@@ -70,28 +70,17 @@ function ViewTraining() {
     }
 
     return (
-        <div className="vh-100 d-flex flex-column">
-            <NavBar />
-            <div className="container-fluid flex-grow-1">
-                <div className="row h-100">
-                    <div className="col-lg-2 col-12" style={{ marginLeft: '-12px' }}>
-                        <Sidebar />
-                    </div>
-                    <div className="col-lg-10 col-12">
-                        <div className="d-flex flex-row">
-                            <h1>{trainingCourse?.title}</h1>
-                        </div>
-                        <div>
-                            <div className="d-flex justify-content-center flex-column">
-                                <div className="row">
-                                    {renderedContainers}
-                                </div>
-                            </div>
-                        </div>
+        <div className="col-lg-10 col-12">
+            <div className="d-flex flex-row">
+                <h1>{trainingCourse?.title}</h1>
+            </div>
+            <div>
+                <div className="d-flex justify-content-center flex-column">
+                    <div className="row">
+                        {renderedContainers}
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     )
 }
