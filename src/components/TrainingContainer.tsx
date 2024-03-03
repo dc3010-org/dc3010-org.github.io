@@ -73,6 +73,7 @@ function TrainingContainer({ course, page }: { course: TrainingCourse, page: str
         if (assignedEmail !== "") {
             try {
                 await updateUserTrainingCoursesByEmail(assignedEmail, course.id);
+                toast.success("User has been allocated training!");
             } catch (error) {
                 if (error instanceof UserNotFoundError) {
                     toast.warn('User not found!');
@@ -103,10 +104,7 @@ function TrainingContainer({ course, page }: { course: TrainingCourse, page: str
                 <h2>
                     --------
                 </h2>
-                <h4 className="text-muted fs-6">
-                    COMPLETION STATUS:
-                </h4>
-                <div className="d-flex flex-row x-3">
+                <div className="d-flex flex-row x-3 mt-5">
                     {enrollElement}
                     {assignElement}
                 </div>

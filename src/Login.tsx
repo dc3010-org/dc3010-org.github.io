@@ -15,6 +15,8 @@ function Login() {
     logIn = useUserAuth().logIn;
     const navigate = useNavigate();
 
+    let errorElement;
+
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setError("");
@@ -22,7 +24,16 @@ function Login() {
             await logIn(email, password);
             navigate("/dashboard");
         } catch (error) {
-            setError(error as string);
+            setError(JSON.stringify(error));
+        }
+    }
+    if (error) {
+        if (error.includes("auth/invalid-email")) {
+            errorElement = <p className="fs-4 text-danger">An invalid email has been entered</p>
+        } else if (error.includes("auth/missing-password") || error.includes("auth/invalid-credential")) {
+            errorElement = <p className="fs-4 text-danger">The password entered does not match with this account</p>
+        } else {
+            errorElement = <p className="fs-4 text-danger">An unexpected error has occured, please try again later</p>
         }
     }
 
@@ -35,7 +46,7 @@ function Login() {
                     </div>
                     <h1>Login Below!</h1>
                 </header>
-                <div>
+                <div className="w-25">
                     <h2>Email</h2>
                     <div className="input-group mb-3">
                         <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
@@ -47,10 +58,11 @@ function Login() {
                     <div className="input-group mb-3">
                         <button type="button" className="btn btn-primary btn-lg" aria-label='signup-button' onClick={handleSubmit}>Log In!</button>
                     </div>
-                    <h4>
-                        Haven't got an account? <Link to="/signup">Sign up!</Link>
-                    </h4>
                 </div>
+                {errorElement}
+                <h4>
+                    Haven't got an account? <Link to="/signup">Sign up!</Link>
+                </h4>
             </div>
             <Footer />
         </div>
