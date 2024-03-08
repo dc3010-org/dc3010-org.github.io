@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Container, DescriptionContainer, QuestionAnswerContainer, TrainingCourse } from "../data/TrainingCourse";
-import { useFirebase } from "../FirebaseProvider";
-import React from "react";
-import { isTypeElement } from "typescript";
+import { Container } from "../data/TrainingCourse";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ToastContainer, toast } from "react-toastify";

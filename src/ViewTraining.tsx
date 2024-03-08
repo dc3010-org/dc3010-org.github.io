@@ -1,8 +1,3 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ToastContainer, toast } from "react-toastify";
-import NavBar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import { useFirebase } from "./FirebaseProvider";
 import ViewTrainingContainer from "./components/ViewTrainingContainer";
 import { useLocation } from "react-router-dom";

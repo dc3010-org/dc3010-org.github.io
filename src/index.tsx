@@ -4,7 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap";
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 
 const root = ReactDOM.createRoot(

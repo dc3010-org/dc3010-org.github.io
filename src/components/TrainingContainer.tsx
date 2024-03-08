@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { LoadingState, User, UserNotFoundError, useFirebase } from "../FirebaseProvider";
+import { UserNotFoundError, useFirebase } from "../FirebaseProvider";
 import { TrainingCourse } from "../data/TrainingCourse";
-import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
