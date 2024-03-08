@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, database as db } from './firebase';
-import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, limit, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
+import React, { createContext, useContext } from 'react';
+import { database as db } from './firebase';
+import { addDoc, arrayUnion, collection, doc, getDocs, limit, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 import { TrainingCourse } from './data/TrainingCourse';
 import { useUserAuth } from './UserAuthContext';
 
@@ -83,7 +83,6 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         setLoadingState(LoadingState.Loading);
         return output.id;
     };
-    console.log(trainingCourses)
 
     const getCoursesByTitle = (title: string) => {
         return trainingCourses.filter(course => course.title.includes(title));

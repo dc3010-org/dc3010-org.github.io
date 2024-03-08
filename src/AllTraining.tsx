@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { LoadingState, useFirebase } from "./FirebaseProvider";
-import NavBar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import TrainingContainer from "./components/TrainingContainer";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +16,8 @@ function AllTraining() {
     React.useEffect(() => {
         setSearchTerm('');
         setTrainingContainerValues(trainingCourses);
+        // comment to disable eslint check on state vale being updated in useEffect Hook
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingState]);
 
     if (loadingState === LoadingState.Loading) {

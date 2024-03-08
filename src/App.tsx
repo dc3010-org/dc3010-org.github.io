@@ -10,9 +10,6 @@ import CreateTraining from './CreateTraining';
 import ViewTraining from './ViewTraining';
 import './App.css';
 import { FirebaseProvider } from './FirebaseProvider';
-import { ToastContainer } from 'react-toastify';
-import NavBar from './components/Navbar';
-import Sidebar from './components/Sidebar';
 
 
 function App() {
