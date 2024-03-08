@@ -26,8 +26,12 @@ function AllTraining() {
         return <p>Whoops! *Something* went wrong!</p>
     }
 
-    let renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} page={"all-training"} />);
-
+    let renderedCourses;
+    if (trainingContainerValues) {
+        renderedCourses = trainingContainerValues.map(course => <TrainingContainer course={course} page={"all-training"} />);
+    } else {
+        renderedCourses = "No courses on the database."
+    }
     function searchByTitle() {
         let newCourses;
         if (!searchTerm.trim().length) {
@@ -42,7 +46,7 @@ function AllTraining() {
     return (
         <div className="col-lg-10 col-12">
             <header className="d-flex justify-content-center flex-column">
-                <h1>Available Training Courses:</h1>
+                <h1 aria-label="alltraining-label">Available Training Courses:</h1>
                 <div className="border border-primary-subtle rounded px-3 d-flex my-3">
                     <div className="input-group m-3">
                         <input
@@ -57,7 +61,7 @@ function AllTraining() {
                             className="btn btn-primary btn-lg"
                             aria-label='search-training-course'
                             onClick={searchByTitle}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} /> Search for training course
+                            <FontAwesomeIcon icon={faMagnifyingGlass} aria-label="font-awesome-search" /> Search for training course
                         </button>
                     </div>
                 </div>

@@ -24,16 +24,16 @@ function NavBar() {
         <div className="d-inline-flex">
             <nav className="navbar navbar-dark bg-dark navbar-style vw-100" style={{ gap: '5px' }}>
                 <div className="me-auto mx-md-3 mx-1">
-                    <Link className="navbar-brand fs-1" to="/dashboard">CapTrainimi</Link>
+                    <Link className="navbar-brand fs-1" to="/dashboard" aria-label="application-title">CapTrainimi</Link>
                 </div>
                 <div className="p-md-3 p-1 text-center user-data-text" style={{ marginLeft: 'auto' }}>
-                    <p>Logged in as: <br />
-                        {user.email}
+                    <p aria-label="logged-in-text">Logged in as: <br />
+                        {user && user.email ? user.email : "Invalid state, try logging in again."}
                     </p>
                 </div>
                 <div className="">
-                    <button type="button" className="btn btn-outline-light btn-lg" aria-label='logout-button' onClick={handleLogout}>
-                        <FontAwesomeIcon icon={faRightFromBracket} /> <span className='d-none d-sm-inline'>Log out</span>
+                    <button type="button" className="btn btn-outline-light btn-lg" aria-label='log-out-button' onClick={handleLogout}>
+                        <FontAwesomeIcon icon={faRightFromBracket} aria-label="font-awesome-logout" /> <span className='d-none d-sm-inline' aria-label="logout-button-span">Log out</span>
                     </button>
                 </div>
 

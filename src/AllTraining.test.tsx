@@ -1,36 +1,50 @@
 import { render, screen } from '@testing-library/react';
-import Home from './Home';
 import { HashRouter } from 'react-router-dom';
+import { useFirebase } from './FirebaseProvider';
+import { useUserAuth } from './UserAuthContext';
+import AllTraining from './AllTraining';
 
-test('Home Screen renders title of applicaion', () => {
-  render(<HashRouter><Home /></HashRouter>);
-  const textElement = screen.getByText(/CapTrainimi/i);
+jest.mock("./UserAuthContext");
+jest.mock("./FirebaseProvider");
+
+test('AllTraining Screen renders title', () => {
+  (useUserAuth as jest.Mock).mockResolvedValue("");
+  (useFirebase as jest.Mock).mockResolvedValue("");
+
+  render(<HashRouter><AllTraining /></HashRouter>);
+  const textElement = screen.getByLabelText(/alltraining-label/i);
   expect(textElement).toBeInTheDocument();
+  expect(textElement).toHaveTextContent("Available Training Courses:")
 });
 
-test('Home Screen renders Font Awesome icon', () => {
-  render(<HashRouter><Home /></HashRouter>);
-  const fontAwesomeIconElement = screen.getByLabelText(/font-awesome/i);
-  expect(fontAwesomeIconElement).toBeInTheDocument();
+test('AllTraining Screen renders training course input field', () => {
+  (useUserAuth as jest.Mock).mockResolvedValue("");
+  (useFirebase as jest.Mock).mockResolvedValue("");
+
+  render(<HashRouter><AllTraining /></HashRouter>);
+  const textInput = screen.getByLabelText(/search-term/i);
+  expect(textInput).toBeInTheDocument();
+  expect(textInput).toHaveClass("form-control")
+  expect(textInput).toBeEnabled();
 });
 
-test('Home Screen renders Login and Signup with email buttons', () => {
-  render(<HashRouter><Home /></HashRouter>);
-  const loginButton = screen.getByLabelText(/login-button/i);
-  expect(loginButton).toBeInTheDocument();
-  expect(loginButton).toBeEnabled();
-  expect(loginButton).toHaveClass('btn btn-outline-primary btn-lg');
+test('AllTraining Screen renders search for training button', () => {
+  (useUserAuth as jest.Mock).mockResolvedValue("");
+  (useFirebase as jest.Mock).mockResolvedValue("");
 
-  const signupButton = screen.getByLabelText(/signup-button/i);
-  expect(signupButton).toBeInTheDocument();
-  expect(signupButton).toBeEnabled();
-  expect(signupButton).toHaveClass('btn btn-outline-primary btn-lg');
-
+  render(<HashRouter><AllTraining /></HashRouter>);
+  const searchButton = screen.getByLabelText(/search-training-course/i);
+  expect(searchButton).toBeInTheDocument();
+  expect(searchButton).toHaveTextContent("Search for training course")
+  expect(searchButton).toBeEnabled();
+  expect(searchButton).toHaveClass("btn btn-primary btn-lg")
 });
 
-test('Home Screen renders Footer', () => {
-  render(<HashRouter><Home /></HashRouter>);
-  const footerElementtext = screen.getByLabelText(/footer-text/i);
-  expect(footerElementtext).toBeInTheDocument();
-  expect(footerElementtext).toHaveTextContent("DC3010 Final Project Application")
+test('AllTraining Screen renders fontawesome search icon', () => {
+  (useUserAuth as jest.Mock).mockResolvedValue("");
+  (useFirebase as jest.Mock).mockResolvedValue("");
+
+  render(<HashRouter><AllTraining /></HashRouter>);
+  const textElement = screen.getByLabelText(/font-awesome-search/i);
+  expect(textElement).toBeInTheDocument();
 });

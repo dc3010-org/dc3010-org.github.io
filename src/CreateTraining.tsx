@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NavBar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import { faFloppyDisk, faPlus } from '@fortawesome/free-solid-svg-icons';
 import QuestionAnswer from './components/QuestionAnswer';
 import Description from './components/Description';
 import { v4 as randomId, } from 'uuid';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
-import { doc, setDoc } from "firebase/firestore";
 import { useUserAuth } from './UserAuthContext';
-import { getAllByLabelText } from '@testing-library/react';
 import { Container, DescriptionContainer, QuestionAnswerContainer } from './data/TrainingCourse';
 import { useFirebase } from './FirebaseProvider';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 function getDefaultContainerData(type: Container['type']): Container {
     const id = randomId();
-
+    // check for what type of part the container is
     switch (type) {
         case 'qa': {
             return {
@@ -47,14 +43,14 @@ function CreateTraining() {
 
     const { createTrainingCourse, userData } = useFirebase();
 
-
+    // if a user doesnt have the correct role, redirect them to the dashboard
     React.useEffect(() => {
         if (parseInt(userData?.role!) !== 2) {
             navigate("/dashboard");
         }
     })
 
-
+    // add a list of containers to a list, so they can be rendered once the state changes
     function addContainerFunc(type: Container['type']): React.MouseEventHandler {
         return (e) => {
             e.preventDefault();
@@ -64,6 +60,7 @@ function CreateTraining() {
         };
     }
 
+    // render list of containers stored, this is to avoid infinite rendering loops
     const renderedContainers = containers.map((container, index) => {
         const props = {
             key: container.id,
@@ -116,7 +113,7 @@ function CreateTraining() {
         <div className="col-lg-10 col-12">
             <div className="d-flex flex-row">
                 <div className="flex-grow-1 flex-column">
-                    <h1>Create a training course</h1>
+                    <h1 aria-label='create-training-title'>Create a training course</h1>
                     <h2 className="fs-4 fw-light ps-2">Press either button below to get started!</h2>
                 </div>
                 <div className="p-2">
