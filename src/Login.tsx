@@ -44,23 +44,23 @@ function Login() {
                     <div className="font-awesome-icon">
                         <FontAwesomeIcon icon={faFilePen} aria-label='font-awesome' />
                     </div>
-                    <h1>Login Below!</h1>
+                    <h1 aria-label='login-label'>Login Below!</h1>
                 </header>
                 <div className="w-25">
-                    <h2>Email</h2>
+                    <h2 aria-label='email-label'>Email</h2>
                     <div className="input-group mb-3">
-                        <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email' onChange={(e) => setEmail(e.target.value)}></input>
+                        <input type="text" className="form-control" placeholder='e.g. EmailHandle@provider.com' aria-label='email-input' onChange={(e) => setEmail(e.target.value)}></input>
                     </div>
-                    <h2>Password</h2>
+                    <h2 aria-label='password-label'>Password</h2>
                     <div className="input-group mb-3">
-                        <input type="password" className="form-control" aria-label='password' onChange={(e) => setPassword(e.target.value)}></input>
+                        <input type="password" className="form-control" aria-label='password-input' onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
                     <div className="input-group mb-3">
-                        <button type="button" className="btn btn-primary btn-lg" aria-label='signup-button' onClick={handleSubmit}>Log In!</button>
+                        <button type="button" className="btn btn-primary btn-lg" aria-label='login-button' onClick={handleSubmit}>Log In!</button>
                     </div>
                 </div>
                 {errorElement}
-                <h4>
+                <h4 aria-label='login-link-label'>
                     Haven't got an account? <Link to="/signup">Sign up!</Link>
                 </h4>
             </div>

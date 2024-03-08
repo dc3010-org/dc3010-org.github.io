@@ -86,7 +86,9 @@ function CreateTraining() {
     async function saveTrainingData() {
         // training_course:{
         //  author:
-        //  data:[
+        //  createdAt:
+        //  title:
+        //  parts:[
         //         {
         //             question:
         //             answer:

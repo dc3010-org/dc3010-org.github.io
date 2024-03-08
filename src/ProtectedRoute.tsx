@@ -7,9 +7,7 @@ import { ToastContainer } from 'react-toastify';
 function ProtectedRoute({ children, authRequired = false }: { children: any, authRequired?: boolean }) {
     let user: any = {};
     user = useUserAuth().user;
-    console.log('What');
 
-    console.log("Check user in Private: ", user);
     if (!user === !!authRequired) {
         return <Navigate to={authRequired ? '/' : '/dashboard'} />;
     }

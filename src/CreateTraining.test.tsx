@@ -2,8 +2,6 @@ import { render, screen } from '@testing-library/react';
 import Home from './Home';
 import { HashRouter } from 'react-router-dom';
 
-jest.mock("./UserAuthContext");
-
 test('Home Screen renders title of applicaion', () => {
   render(<HashRouter><Home /></HashRouter>);
   const textElement = screen.getByText(/CapTrainimi/i);

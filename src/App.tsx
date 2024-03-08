@@ -27,9 +27,6 @@ function App() {
         { path: '/view-training', element: <ViewTraining />, authRequired: true },
     ]
 
-
-    const x = [1, 2, 3].map(e => e + 1); // [ 2, 3, 4]
-
     const renderedRoutes = routes.map(route => <Route path={route.path} element={<ProtectedRoute authRequired={route.authRequired}>{route.element}</ProtectedRoute>} />);
 
     return (

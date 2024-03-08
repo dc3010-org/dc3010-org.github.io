@@ -4,6 +4,7 @@ import { DocumentData, QueryDocumentSnapshot, addDoc, arrayUnion, collection, de
 import { TrainingCourse } from './data/TrainingCourse';
 import { useUserAuth } from './UserAuthContext';
 
+// define class for user for transferring user data from database to application
 export interface User {
     uid: string;
     email: string | null;
@@ -11,6 +12,7 @@ export interface User {
     trainingCourseIds: string[];
 }
 
+// define functions for use with firebase context in application, defining arguments and return types
 interface FirebaseContextType {
     trainingCourses: TrainingCourse[];
     loadingState: LoadingState,
@@ -29,10 +31,7 @@ const FirebaseContext = createContext<FirebaseContextType | undefined>(undefined
 
 export const useFirebase = (): FirebaseContextType => {
     const context = useContext(FirebaseContext);
-    if (!context) {
-        throw new Error('useFirebase must be used within a FirebaseProvider');
-    }
-    return context;
+    return context!;
 };
 
 export enum LoadingState {
@@ -60,6 +59,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
     const fetchTrainingCourses = async () => {
         const trainingCourseRef = collection(db, 'training-courses');
+        // get documents
         const snapshot = await getDocs(
             query(trainingCourseRef)
         );
@@ -79,10 +79,6 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
             ...trainingCourse,
             createdAt: serverTimestamp()
         });
-
-        // how to update a doc:
-        // const document = doc(db, 'training-courses', output.id);
-        // const output2 = await updateDoc(document, trainingCourse);
 
         setLoadingState(LoadingState.Loading);
         return output.id;
@@ -136,6 +132,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
 
     const updateUserTrainingCourses = async (userId: string, trainingCourseId: string) => {
         const document = doc(db, 'users', userId);
+        // update document
         const output = await updateDoc(document, {
             trainingCourseIds: arrayUnion(trainingCourseId)
         });
@@ -156,6 +153,7 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
     }
 
     React.useEffect(() => {
+        // check if application is awaiting login from a user
         if (![LoadingState.PendingLogin, LoadingState.Loading].includes(loadingState) || authedUser === null) {
             if (authedUser === null) {
                 setLoadingState(LoadingState.PendingLogin);
@@ -167,12 +165,15 @@ export const FirebaseProvider: React.FC<React.PropsWithChildren> = ({ children }
         fetchTrainingCourses().then(() => {
             setLoadingState(LoadingState.Success);
         });
+        // monitor changes to states loadingState and authedUser, if chaned, these functions within the useEffect will run again
     }, [loadingState, authedUser]);
 
+    // if a user is awaiting login, display a loading element
     if (![LoadingState.Success, LoadingState.PendingLogin].includes(loadingState) || (loadingState === LoadingState.PendingLogin && authedUser !== null)) {
         return (<p>Loading</p>)
     }
 
+    // pass props of functions and variables defined here for application to use
     return <FirebaseContext.Provider value={{
         loadingState,
         trainingCourses,

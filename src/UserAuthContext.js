@@ -7,8 +7,6 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 
-// we'll sort out typing for this later lol
-
 const userAuthContext = createContext();
 
 export function useUserAuth() {
@@ -40,6 +38,7 @@ export function UserAuthContextProvider({ children }) {
 
 
   return (
+    // pass functions and state variables defined here as props for use in application 
     <userAuthContext.Provider
       value={{ user, logIn, signUp, logOut }}
     >

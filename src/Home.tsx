@@ -10,7 +10,6 @@ function Home() {
     <div className="background-image">
       <div className="app-baseline-layout">
         <header className="header-spacing">
-          {/* Title of the application. CapTrainimi*/}
           <h1 className="home-title-text">CapTrainimi</h1>
           <div className="font-awesome-icon">
             <FontAwesomeIcon icon={faFilePen} aria-label='font-awesome' />
